@@ -4,7 +4,7 @@ use std::fs;
 use std::path::Path;
 use std::sync::{Arc, Mutex};
 use mime_guess::from_path;
-use server::ThreadPool;
+use moodflow::ThreadPool;
 use serde::{Deserialize, Serialize};
 
 const DB_FILE: &str = "data/entries.json";

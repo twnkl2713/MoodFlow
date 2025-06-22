@@ -197,6 +197,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "moodflow"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "fs",
+ "mime_guess",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "num-traits"
 version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -281,17 +292,6 @@ dependencies = [
  "memchr",
  "ryu",
  "serde",
-]
-
-[[package]]
-name = "server"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "fs",
- "mime_guess",
- "serde",
- "serde_json",
 ]
 
 [[package]]
