@@ -1,21 +1,33 @@
-# Build Stage
-FROM rust:1.70 as builder
+# Use the official Rust image to build and run the application
+FROM rust:1.76 as builder
 
-WORKDIR /usr/src/app
-COPY . .
-
-RUN cargo build --release
-
-# Runtime Stage
-FROM debian:buster-slim
+# Set the working directory
 WORKDIR /app
 
-# Copy the compiled binary
-COPY --from=builder /usr/src/app/target/release/YOUR_BINARY_NAME /app/server
-
-# Copy your static files (if server reads from them)
+# Copy Cargo files
+COPY Cargo.toml Cargo.lock ./
+COPY src ./src
 COPY static ./static
 COPY data ./data
 
+# Build the app
+RUN cargo build --release
+
+# Prepare minimal image
+FROM debian:buster-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy built binary
+COPY --from=builder /app/target/release/moodflow /app/moodflow
+
+# Copy static files and data
+COPY static ./static
+COPY data ./data
+
+# Expose port
 EXPOSE 3000
-CMD ["./server"]
+
+# Run binary
+CMD ["./moodflow"]
