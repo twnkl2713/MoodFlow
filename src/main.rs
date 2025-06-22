@@ -17,7 +17,7 @@ struct Entry {
 }
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let listener = TcpListener::bind("0.0.0.0:3000").unwrap();
     println!("Server running on http://127.0.0.1:7878");
 
     let pool = ThreadPool::new(4);
