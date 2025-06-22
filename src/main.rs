@@ -18,7 +18,7 @@ struct Entry {
 
 fn main() {
     let listener = TcpListener::bind("0.0.0.0:3000").unwrap();
-    println!("Server running on http://127.0.0.1:7878");
+    println!("Listening on port 3000...");
 
     let pool = ThreadPool::new(4);
     let entries = Arc::new(Mutex::new(load_entries()));
