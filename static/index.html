@@ -1,0 +1,190 @@
+</style> </head> <body> <!-- Background Effects --> <div class="bg-animation"> <div class="floating-orb orb-1"></div> <div class="floating-orb orb-2"></div> <div class="floating-orb orb-3"></div> <div class="floating-orb orb-4"></div> </div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodFlow - Track Your Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-animation">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        <div class="floating-orb orb-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                
+                <span class="brand-text">MoodFlow</span>
+            </div>
+            <div class="nav-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalEntries">0</span>
+                    <span class="stat-label">Entries</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="currentStreak">0</span>
+                    <span class="stat-label">Day Streak</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Track Your Journey</span>
+                    <br>One Mood at a Time
+                </h1>
+                <p class="hero-subtitle">
+                    Discover patterns, understand emotions, and grow with intelligent mood analytics
+                </p>
+            </div>
+        </section>
+
+        <!-- Quick Entry Card -->
+        <section class="quick-entry-section">
+            <div class="glass-card entry-card">
+                <div class="card-header">
+                    <h2 class="card-title">How are you feeling right now?</h2>
+                    <div class="mood-indicators">
+                        <div class="mood-indicator active" data-mood="neutral">😐</div>
+                        <div class="mood-indicator" data-mood="happy">😊</div>
+                        <div class="mood-indicator" data-mood="sad">😢</div>
+                        <div class="mood-indicator" data-mood="stressed">😰</div>
+                    </div>
+                </div>
+                <div class="entry-form">
+                    <div class="input-group">
+                        <textarea id="entryText" placeholder="Share what's on your mind... (AI will analyze your mood automatically)" rows="4"></textarea>
+                        <div class="input-actions">
+                            <div class="mood-prediction" id="moodPrediction">
+                                <span class="prediction-label">AI Detected:</span>
+                                <span class="prediction-mood">Neutral 😐</span>
+                            </div>
+                            <button class="primary-btn" onclick="addEntry()">
+                                <span>Add Entry</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="success-toast" id="successToast">
+                    <div class="toast-content">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span>Entry saved successfully!</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Grid -->
+        <section class="dashboard-grid">
+            <!-- Analytics Card -->
+            <div class="glass-card analytics-card">
+                <div class="card-header">
+                    <h3 class="card-title">Mood Analytics</h3>
+                    <div class="card-actions">
+                        <button class="icon-btn" onclick="exportAsJSON()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 15V19A2 2 0 0119 21H5A2 2 0 013 19V15" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2"/>
+                                <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="moodChart"></canvas>
+                </div>
+                <div class="mood-stats">
+                    <div class="mood-stat">
+                        <div class="stat-icon happy">😊</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="happyCount">0</span>
+                            <span class="stat-name">Happy</span>
+                        </div>
+                    </div>
+                    <div class="mood-stat">
+                        <div class="stat-icon sad">😢</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="sadCount">0</span>
+                            <span class="stat-name">Sad</span>
+                        </div>
+                    </div>
+                    <div class="mood-stat">
+                        <div class="stat-icon stressed">😰</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stressedCount">0</span>
+                            <span class="stat-name">Stressed</span>
+                        </div>
+                    </div>
+                    <div class="mood-stat">
+                        <div class="stat-icon neutral">😐</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="neutralCount">0</span>
+                            <span class="stat-name">Neutral</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Card -->
+            <div class="glass-card timeline-card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Entries</h3>
+                    <div class="timeline-filter">
+                        <button class="filter-btn active" onclick="filterTimeline('all')">All</button>
+                        <button class="filter-btn" onclick="filterTimeline('today')">Today</button>
+                        <button class="filter-btn" onclick="filterTimeline('week')">Week</button>
+                        <button class="filter-btn" onclick="filterTimeline('month')">Month</button>
+                    </div>
+                </div>
+                <div class="timeline-container" id="timelineContainer">
+                    <!-- Timeline entries will be dynamically populated -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights Section -->
+        <section class="insights-section">
+            <div class="glass-card insights-card">
+                <div class="card-header">
+                    <h3 class="card-title">AI Insights</h3>
+                    <div class="insight-badge">Smart Analysis</div>
+                </div>
+                <div class="insights-grid" id="insightsGrid">
+                    <!-- Insights will be dynamically populated -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
